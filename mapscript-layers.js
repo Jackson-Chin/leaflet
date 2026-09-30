@@ -23,13 +23,6 @@ const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 })
 
-L.control.layers({ 
-    "Streets": streets, 
-    "Topographic": topo, 
-    "Satellite": satellite,
-    "OpenStreetMap": osm
-}).addTo(map);
-
 // Add the following
 const quick_eats = [
     { name: "Qdoba Mexican Eats",  coords: [40.002265770114704, -83.00831544391653] },
@@ -67,10 +60,6 @@ const QEATS_COLOR    = '#a6531c';
 const LANDMARK_COLOR = '#1fbf78';
 const STORE_COLOR    = '#1f78bf'
 
-quick_eats.forEach(f => L.marker(f.coords, { icon: svgIcon(QEATS_COLOR) }).addTo(map));
-convenience_stores.forEach(f => L.marker(f.coords, { icon: svgIcon(STORE_COLOR) }).addTo(map));
-landmarks.forEach(f => L.marker(f.coords, { icon: svgIcon(LANDMARK_COLOR) }).addTo(map));
-
 const college = [
     [40.0029902773675, -83.01082341784424],
     [40.00222914683255, -83.01066613770229], //
@@ -92,10 +81,6 @@ const high = [
     [40.00244924246706, -83.00856239218395],  //
     [39.99855011031908, -83.00780731455644]
 ]
-
-L.polyline(college, { color: '#a6531c', weight: 4 }).addTo(map);
-L.polyline(eighteenth, { color: '#a6531c', weight: 4 }).addTo(map);
-L.polyline(high, { color: '#a6531c', weight: 4 }).addTo(map);
 
 // coordinates are counterclockwise
 const sullivant = [
@@ -163,27 +148,40 @@ const north =
     ]
 ]
 
-L.polygon(sullivant, {
-    color: '#1f6f78',   // stroke color
-    fillColor: '#1f6f78',
-    fillOpacity: 0.25
-}).addTo(map);
+// 1. Make 3 layer groups for the points
 
-L.polygon(mershon, {
-    color: '#1f6f78',   // stroke color
-    fillColor: '#1f6f78',
-    fillOpacity: 0.25
-}).addTo(map);
+const qeatsLayer = L.layerGroup(
+  quick_eats.map(f => L.marker(f.coords, { icon: svgIcon(QEATS_COLOR) })) // construct a new array
+).addTo(map);
 
-L.polygon(north, {
-    color: '#1f6f78',   // stroke color
-    fillColor: '#1f6f78',
-    fillOpacity: 0.25
-}).addTo(map);
+const storesLayer = L.layerGroup(
+  convenience_stores.map(f => L.marker(f.coords, { icon: svgIcon(STORE_COLOR) })) // construct a new array
+).addTo(map);
 
+const landmarksLayer = L.layerGroup(
+  landmarks.map(f => L.marker(f.coords, { icon: svgIcon(LANDMARK_COLOR) })) // construct a new array
+).addTo(map);
 
-L.polygon(varsity, {
-    color: '#1f6f78',   // stroke color
-    fillColor: '#1f6f78',
-    fillOpacity: 0.25
-}).addTo(map);
+// 2. Create one layer group for all streets
+const linesLayer = L.layerGroup([
+    L.polyline(college, { color: '#a6531c', weight: 4 }),
+    L.polyline(eighteenth, { color: '#a6531c', weight: 4 }),
+    L.polyline(high, { color: '#a6531c', weight: 4 })
+]);
+
+// 3. Create one layer group for all buildings
+const polygon_style = {color: '#1f6f78', fillColor: '#1f6f78', fillOpacity: 0.25};
+
+const buildingLayer = L.layerGroup([
+    L.polygon(sullivant, polygon_style),
+    L.polygon(mershon, polygon_style),
+    L.polygon(north, polygon_style),
+    L.polygon(varsity, polygon_style)
+])
+
+// 4. Create the control with all layers
+L.control.layers(
+    { "Streets": streets, "Topographic": topo, "Satellite": satellite, "OpenStreetMap": osm },
+    { "Quick eats": qeatsLayer, "Stores": storesLayer, "Landmarks": landmarksLayer, 
+        "Streets": linesLayer, "Buildings": buildingLayer }
+).addTo(map);
