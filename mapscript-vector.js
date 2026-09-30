@@ -1,6 +1,6 @@
 const map = L.map('map', { 
-    center: [40.0007, -83.008], // -- NEW
-    zoom: 17                    // -- NEW
+    center: [40.0007, -83.0095], // -- NEW
+    zoom: 17                  // -- NEW
 });
 
 const streets = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -70,3 +70,29 @@ const STORE_COLOR    = '#1f78bf'
 quick_eats.forEach(f => L.marker(f.coords, { icon: svgIcon(QEATS_COLOR) }).addTo(map));
 convenience_stores.forEach(f => L.marker(f.coords, { icon: svgIcon(STORE_COLOR) }).addTo(map));
 landmarks.forEach(f => L.marker(f.coords, { icon: svgIcon(LANDMARK_COLOR) }).addTo(map));
+
+const college = [
+    [40.0029902773675, -83.01082341784424],
+    [40.00222914683255, -83.01066613770229], //
+    [40.00029823980815, -83.01027760255613],
+    [40.00012506372174, -83.00988669532954],
+    [39.99963660599409, -83.00976593660397],
+    [39.99933257652167, -83.01005876706844],
+    [39.998264098365574, -83.00977736704833]
+];
+
+const eighteenth = [
+    [40.00210617569432, -83.01144806171567],
+    [40.00222914683255, -83.01066613770229], //
+    [40.00244924246706, -83.00856239218395] //
+]
+
+const high = [
+    [40.00300190629786, -83.0086674960556],
+    [40.00244924246706, -83.00856239218395],  //
+    [39.99855011031908, -83.00780731455644]
+]
+
+L.polyline(college, { color: '#a6531c', weight: 4 }).addTo(map);
+L.polyline(eighteenth, { color: '#a6531c', weight: 4 }).addTo(map);
+L.polyline(high, { color: '#a6531c', weight: 4 }).addTo(map);
