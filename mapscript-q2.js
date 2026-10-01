@@ -25,19 +25,20 @@ const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // point festures
 const dinner_spots = [
-    { name: "Qdoba Mexican Eats",  coords: [40.002265770114704, -83.00831544391653], note: "Tried once and it is good." },
-    { name: "Red Chili",           coords: [40.0020812252386, -83.00827194929629], note: "Haven't been yet." },
-    { name: "Smashburger",         coords: [39.999824185055225, -83.007835944253], note: "I like it, a little greasy though." },
-    { name: "Dave's Hot Chicken",  coords: [39.99964518131456, -83.00783907331429], note: "Very good, spicy!" }
+    { name: "Yours Truly", coords: [41.43066614284098, -81.3913822455981], note: "Classic diner for breakfast, lunch or dinner." },
+    { name: "M Italian", coords: [41.43236449618836, -81.39349924395754], note: "Good happy hour deal on pizza." },
+    { name: "17 River Grill", coords: [41.43130172813415, -81.39284144578075], note: "Good place for a view of the Chagrin River and a nice meal." }
 ]
 
 const dessert_shops = [
-    {name: "Target", coords: [40.00094825710499, -83.00802044889093], note: "There is a Starbucks inside."}
+    {name: "Chagrin Falls Popcorn Shop", coords: [41.43112859368718, -81.39207715662624], note: "Good ice cream, great popcorn."},
+    { name: "Jeni's Splendid Ice Creams", coords: [41.43144090573112, -81.39234782873788], note: "Great seasonal flavors." }
 ]
 
 const historical_landmarks = [
-    { name: "University Square",   coords: [40.00018911567196, -83.00766099251994], note: "Nice open space." },
-    { name: "Union Garage North",  coords: [39.99895193757101, -83.00846543279417], note: "Shops and quick eats." }
+    { name: "Chagrin Falls Waterfall", coords: [40.00018911567196, -83.00766099251994], note: "Includes stairs down to the river for a better view." },
+    { name: "Chagrin Falls Intermediate School",  coords: [39.99895193757101, -83.00846543279417], note: "Over 100 years old." },
+    { name: "Gazebo", coords: [40.00018911567196, -83.00766099251994], note: "Located in Triangle Park." }
 ];
 
 function svgIcon(color) {
