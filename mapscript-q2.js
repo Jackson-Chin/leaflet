@@ -36,9 +36,9 @@ const dessert_shops = [
 ]
 
 const historical_landmarks = [
-    { name: "Chagrin Falls Waterfall", coords: [40.00018911567196, -83.00766099251994], note: "Includes stairs down to the river for a better view." },
-    { name: "Chagrin Falls Intermediate School",  coords: [39.99895193757101, -83.00846543279417], note: "Over 100 years old." },
-    { name: "Gazebo", coords: [40.00018911567196, -83.00766099251994], note: "Located in Triangle Park." }
+    { name: "Chagrin Falls Waterfall", coords: [41.43129234563544, -81.39216620388052], note: "Includes stairs down to the river for a better view." },
+    { name: "Chagrin Falls Intermediate School",  coords: [41.43088703920588, -81.38903207361484], note: "Over 100 years old." },
+    { name: "Gazebo", coords: [41.43012536919485, -81.39151311681933], note: "Located in Triangle Park." }
 ];
 
 function svgIcon(color) {
