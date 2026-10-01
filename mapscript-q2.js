@@ -1,6 +1,6 @@
 const map = L.map('map', { 
-    center: [40.0007, -83.0095], // -- NEW
-    zoom: 17                  // -- NEW
+    center: [41.43016555778457, -81.39152017280479], // -- Chagrin Falls, OH (my hometown)
+    zoom: 17
 });
 
 const streets = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -23,20 +23,19 @@ const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 })
 
-// Add the following
-const quick_eats = [
+// point festures
+const dinner_spots = [
     { name: "Qdoba Mexican Eats",  coords: [40.002265770114704, -83.00831544391653], note: "Tried once and it is good." },
     { name: "Red Chili",           coords: [40.0020812252386, -83.00827194929629], note: "Haven't been yet." },
     { name: "Smashburger",         coords: [39.999824185055225, -83.007835944253], note: "I like it, a little greasy though." },
     { name: "Dave's Hot Chicken",  coords: [39.99964518131456, -83.00783907331429], note: "Very good, spicy!" }
 ]
 
-const convenience_stores = [
+const dessert_shops = [
     {name: "Target", coords: [40.00094825710499, -83.00802044889093], note: "There is a Starbucks inside."}
 ]
 
-// These may or may not be "landmarks", but a square and a garage are hard to miss 
-const landmarks = [
+const historical_landmarks = [
     { name: "University Square",   coords: [40.00018911567196, -83.00766099251994], note: "Nice open space." },
     { name: "Union Garage North",  coords: [39.99895193757101, -83.00846543279417], note: "Shops and quick eats." }
 ];
@@ -56,10 +55,11 @@ function svgIcon(color) {
     });
 }
 
-const QEATS_COLOR    = '#a6531c';
-const LANDMARK_COLOR = '#1fbf78';
-const STORE_COLOR    = '#1f78bf'
+const DINNER_COLOR    = '#a6531c';
+const DESSERT_COLOR = '#1fbf78';
+const LANDMARK_COLOR    = '#1f78bf'
 
+// polylines
 const college = [
     [40.0029902773675, -83.01082341784424],
     [40.00222914683255, -83.01066613770229], //
@@ -148,27 +148,20 @@ const north =
     ]
 ]
 
-const radar = L.tileLayer.wms('https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi', {
-    layers: 'nexrad-n0r',
-    format: 'image/png',
-    transparent: true,
-    attribution: 'Weather data &copy; Iowa Environmental Mesonet'
-}).addTo(map);
-
 // 1. Make 3 layer groups for the points
 
-const qeatsLayer = L.layerGroup(
-    quick_eats.map(f => L.marker(f.coords, { icon: svgIcon(QEATS_COLOR) })
+const dinnerLayer = L.layerGroup(
+    dinner_spots.map(f => L.marker(f.coords, { icon: svgIcon(DINNER_COLOR) })
         .bindPopup(`<strong>${f.name}</strong><br/>${f.note}`))
 ).addTo(map);
 
-const storesLayer = L.layerGroup(
-    convenience_stores.map(f => L.marker(f.coords, { icon: svgIcon(STORE_COLOR) })
+const dessertLayer = L.layerGroup(
+    dessert_shops.map(f => L.marker(f.coords, { icon: svgIcon(DESSERT_COLOR) })
         .bindPopup(`<strong>${f.name}</strong><br/>${f.note}`))
 ).addTo(map);
 
-const landmarksLayer = L.layerGroup(
-    landmarks.map(f => L.marker(f.coords, { icon: svgIcon(LANDMARK_COLOR) })
+const historicalLandmarksLayer = L.layerGroup(
+    historical_landmarks.map(f => L.marker(f.coords, { icon: svgIcon(LANDMARK_COLOR) })
         .bindPopup(`<strong>${f.name}</strong><br/>${f.note}`))
 ).addTo(map);
 
@@ -192,6 +185,6 @@ const buildingLayer = L.layerGroup([
 // 4. Create the control with all layers
 L.control.layers(
     { "Streets": streets, "Topographic": topo, "Satellite": satellite, "OpenStreetMap": osm },
-    { "Quick eats": qeatsLayer, "Stores": storesLayer, "Landmarks": landmarksLayer, 
-        "Streets": linesLayer, "Buildings": buildingLayer, "Radar": radar }
+    { "Dinner Locations": dinnerLayer, "Dessert Shops": dessertLayer, "Historical Landmarks": historicalLandmarksLayer, 
+        "Streets": linesLayer, "Buildings": buildingLayer }
 ).addTo(map);
